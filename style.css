@@ -1,0 +1,47 @@
+body {
+  font-family:"Trebuchet MS";
+  background-color: #444444;
+  text-align: center;
+}
+
+#golCanvas {
+  border: 1px solid #555555;
+  background-color: #202020;
+  box-shadow: 0px 20px 12px 12px #222222;
+  padding: 10px;
+}
+
+.gameView {
+  margin: auto;
+    width: 50%;
+}
+
+.myJumbotron {
+  background-color: #202020;
+  color: #e5062f;
+  text-shadow: 0px 8px #444444;
+  margin-bottom: 0px;
+}
+
+button {
+  margin-top: 20px;
+  width: 60px;
+  background-color: red;
+  box-shadow: 5px 5px 5px;
+}
+
+.navbar {
+  background-color: #202020;
+  border-radius: 0px;
+  border: 0px;
+}
+
+.navbar-header.navbarHeader a {
+  font-size: 1.8em;
+  color: #3bd23d;
+}
+
+.nav.navbar-nav.navbarText li a {
+  font-size: 1.5em;
+  color: #3bd23d;
+}

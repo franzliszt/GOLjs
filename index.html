@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Stian GoL</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script><!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+
+    <div class="jumbotron myJumbotron">
+        <h1>Game of Life in JavaScript</h1>
+    </div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header navbarHeader">
+          <a class="navbar-brand" href="#">Arcade Machine</a>
+        </div>
+
+        <ul class="nav navbar-nav navbarText">
+          <li><a href="#">Space Invaders</a></li>
+          <li><a href="#">Snake 2D</a></li>
+          <li><a href="#">Pac-man</a></li>
+          <li><a href="#">Atari Special</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="gameView">
+        <canvas id="golCanvas" height="600" width="600" onmousedown="drawCells()"></canvas>
+      </div>
+      <div class="gameView">
+        <button class="btn" onclick="startGame()" title="Start animation">
+          <span class="glyphicon glyphicon-play"></span>
+        </button>
+
+        <button class="btn" onclick="stopGame()" title="Stop animation">
+          <span class="glyphicon glyphicon-stop" onclick="stopGame()"></span>
+        </button>
+
+        <button class="btn" onclick="clearGame()" title="Stop animation">
+          <span class="glyphicon glyphicon-refresh" onclick="stopGame()"></span>
+        </button>
+
+        <button class="btn" onclick="randomGame()" title="Randomize game">
+          <span class="glyphicon glyphicon-random"></span>
+        </button>
+      </div>
+    </div>
+<p>
+  Endre farge på levende celler. <br />
+  <input type="color" name="favcolor" value="#ff0000" onchange="changeCellColor()">
+</p>
+
+        <script type="text/javascript">
+        var canvasHeight = 600;
+        var canvasWidth = 600;
+        var currentGeneration = createArray(canvasWidth);
+        var nextGeneration = createArray(canvasHeight);
+        var stop;
+        var context;
+        var c;
+
+        // ikke ferdig
+        function changeCellColor() {
+
+        }
+        // ikke ferdig
+        function startGame() {
+
+        }
+        // ikke ferdig
+        function drawCells(e) {
+
+        }
+
+        function randomGame() {
+          populateBoard();
+          tick();
+        }
+
+        function stopGame() {
+          cancelAnimationFrame(stop);
+        }
+
+        function clearGame() {
+          context.clearRect(0, 0, canvasHeight, canvasWidth);
+        }
+
+        function tick() {
+          drawGrid();
+          updateGrid();
+          stop = requestAnimationFrame(tick);
+        }
+
+        function createArray(rows) {
+            var arr = [];
+            for (var i = 0; i < rows; i++) {
+              arr[i] = [];
+            }
+            return arr;
+        }
+
+        function populateBoard() {
+          for (var i = 0; i < canvasHeight; i++) {
+            for (var j = 0; j < canvasWidth; j++) {
+              var randomNumer = Math.random();
+              var number = (randomNumer * 2);
+              var state = Math.floor(number);
+
+              if (state === 1) {
+                currentGeneration[i][j] = 1;
+              } else {
+                currentGeneration[i][j] = 0;
+              }
+            }
+          }
+        }
+
+        function drawGrid() {
+          c = document.getElementById("golCanvas");
+          context = c.getContext("2d");
+          context.clearRect(0, 0, canvasWidth, canvasHeight);
+
+          for (var i = 1; i < canvasHeight; i++) {
+            for (var j = 1; j < canvasWidth; j++) {
+              if (currentGeneration[i][j] === 1) {
+                context.fillStyle = "#e506d6";
+                context.fillRect(i, j, 1, 1);
+              }
+            }
+          }
+        }
+
+        function updateGrid() {
+          for (var i = 1; i < canvasHeight - 1; i++) {
+            for (var j = 1; j < canvasWidth - 1; j++) {
+              var numberOfCells = 0;
+              numberOfCells += currentGeneration[i - 1][j - 1];
+              numberOfCells += currentGeneration[i - 1][j];
+              numberOfCells += currentGeneration[i - 1][j + 1];
+
+              numberOfCells += currentGeneration[i][j - 1];
+              numberOfCells += currentGeneration[i][j + 1];
+
+              numberOfCells += currentGeneration[i + 1][j - 1];
+              numberOfCells += currentGeneration[i + 1][j];
+              numberOfCells += currentGeneration[i + 1][j + 1];
+
+              if (currentGeneration[i][j] === 0) {
+                switch (numberOfCells) {
+                  case 3:
+                    nextGeneration[i][j] = 1;
+                    break;
+                  default:
+                  nextGeneration[i][j] = 0;
+                }
+              } else if (currentGeneration[i][j] === 1) {
+                switch(numberOfCells) {
+                  case 0:
+                  case 1:
+                    nextGeneration[i][j] = 0;
+                    break;
+                  case 2:
+                  case 3:
+                    nextGeneration[i][j] = 1;
+                    break;
+                  case 4:
+                  case 5:
+                  case 6:
+                  case 7:
+                  case 8:
+                    nextGeneration[i][j] = 0;
+                    break;
+                  default:
+                    nextGeneration[i][j] = 0;
+                }
+              }
+            }
+          }
+          for (var i = 0; i < canvasHeight; i++) {
+            for (var j = 0; j < canvasWidth; j++) {
+              currentGeneration[i][j] = nextGeneration[i][j];
+            }
+          }
+        }
+        </script>
+  </body>
+</html>
